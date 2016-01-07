@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/opencamera-code-5013f45a0e65226cf75269aee063be8c14d78f62.iml" filepath="$PROJECT_DIR$/opencamera-code-5013f45a0e65226cf75269aee063be8c14d78f62.iml" />
+    </modules>
+  </component>
+</project>

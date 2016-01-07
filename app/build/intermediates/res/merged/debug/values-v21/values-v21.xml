@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/nick/Documents/Programming_Applications/AndroidApplications/opencamera-code-5013f45a0e65226cf75269aee063be8c14d78f62/app/src/main/res/values-v21/styles.xml -->
+    <eat-comment/>
+    <style name="AppBaseTheme" parent="android:Theme.Material.NoActionBar.Fullscreen">
+        <!-- API 21 theme customizations can go here. -->
+        <item name="android:imageButtonStyle">@style/image_button</item>
+    </style>
+    <style name="image_button" parent="@android:style/Widget.Material.ImageButton">
+        <item name="android:backgroundTint">#d05a595b</item> <!-- standard material design backgroundTint is #ff5a595b, but we want transparent image buttons -->
+    </style>
+</resources>
