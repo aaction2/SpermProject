@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.sourceforge.opencamera.OverallActivity"
+    android:theme="@style/AppTheme">
+
+    <FrameLayout
+        android:id="@+id/prefs_container_over"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/appTitle"
+        android:id="@+id/appTitle"
+        android:focusable="false"
+        android:theme="@style/AppTheme"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/appSubtitle"
+        android:id="@+id/appSubtitle"
+        android:layout_below="@+id/appTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <ImageButton
+        android:id="@+id/settings_over"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/action_settings"
+        android:src="@drawable/settings"
+        android:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:theme="@style/AppTheme"
+        android:onClick="clickedSettingsOver"/>
+
+    <ImageButton
+        android:id="@+id/info"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/info"
+        android:src="@drawable/info"
+        android:visibility="visible"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/settings_over"
+        android:theme="@style/AppTheme"
+        android:onClick="clickedInfo"/>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_alignParentTop="false"
+        android:useDefaultMargins="false"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_centerInParent="true">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="155dp"
+            android:layout_height="match_parent"
+            android:text="@string/shootVideo_btn"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:theme="@style/AppTheme"
+            android:id="@+id/shootVideo_btn"
+            android:layout_columnSpan="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="No video yet."
+            android:id="@+id/info_view"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:paddingLeft="15dp"
+            android:maxLines="1"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="155dp"
+            android:layout_height="match_parent"
+            android:text="@string/previousResults_btn"
+            android:id="@+id/previousResults_btn"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:layout_columnSpan="1"
+            android:enabled="false"
+            android:theme="@style/AppTheme"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="155dp"
+            android:layout_height="match_parent"
+            android:text="@string/analyzeVideo_btn"
+            android:id="@+id/analyzeVideo_btn"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:layout_columnSpan="1"
+            android:enabled="true"
+            android:theme="@style/AppTheme"/>
+
+    </GridLayout>
+
+</RelativeLayout>

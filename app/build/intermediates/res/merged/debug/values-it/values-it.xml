@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/Users/nick/Documents/Programming_Applications/AndroidApplications/opencamera-code-5013f45a0e65226cf75269aee063be8c14d78f62/app/src/main/res/values-it/arrays.xml -->
+    <!-- From: file:/Users/nick/Documents/Programming_Applications/AndroidApplications/SpermProject/app/src/main/res/values-it/arrays.xml -->
     <eat-comment/>
     <string-array name="flash_entries">
         <item>Flash Off</item>
@@ -401,7 +401,7 @@
         <item>volume_nothing</item><!-- actually means change device volume! -->
         <item>volume_really_nothing</item>
     </string-array>
-    <!-- From: file:/Users/nick/Documents/Programming_Applications/AndroidApplications/opencamera-code-5013f45a0e65226cf75269aee063be8c14d78f62/app/src/main/res/values-it/strings.xml -->
+    <!-- From: file:/Users/nick/Documents/Programming_Applications/AndroidApplications/SpermProject/app/src/main/res/values-it/strings.xml -->
     <eat-comment/>
     <string name="about_available">Disponibile</string>
     <string name="about_copy_to_clipboard">Copia nella clipboard</string>

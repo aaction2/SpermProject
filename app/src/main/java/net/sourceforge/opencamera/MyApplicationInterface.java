@@ -765,9 +765,15 @@ public class MyApplicationInterface implements ApplicationInterface {
 		}
         
         main_activity.initAudioListener(); // restart audio listener after video stopped
-
 		// nickkouk
+		// hide the buttons and pass the uri to the main activity to include it in the bundle
 		main_activity.hideAllButtons();
+		if( video_method == VIDEOMETHOD_FILE ) {
+			if (filename != null) {
+				main_activity.switch2Overall(filename); // it's a new video (and not a new picture)
+			}
+		}
+
 	}
 
 	@Override
@@ -798,10 +804,6 @@ public class MyApplicationInterface implements ApplicationInterface {
 		ImageButton view = (ImageButton)main_activity.findViewById(R.id.take_photo);
 		view.setImageResource(R.drawable.take_video_recording);
 		view.setTag(R.drawable.take_video_recording); // for testing
-
-		if (MyDebug.LOG)
-				Log.d(TAG, "nickkouk: calling main_activity:pressedAfterXseconds.");
-		main_activity.pressAfterXseconds();
 	}
 
 	@Override

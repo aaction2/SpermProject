@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:key="@string/preferenceScreen" >
     
     <PreferenceCategory
         android:key="preference_category_camera_effects"
@@ -61,7 +62,9 @@
             />
         -->
 
-        <ListPreference 
+
+        <!--here starts the cleanup.-->
+        <ListPreference
             android:key="preference_lock_orientation"
             android:title="@string/preference_lock_orientation"
             android:summary="@string/preference_lock_orientation_summary"
@@ -93,7 +96,7 @@
 	        android:defaultValue="0"
 	        />
 
-        <ListPreference 
+        <ListPreference
             android:key="preference_burst_mode"
             android:title="@string/preference_burst_mode"
             android:summary="@string/preference_burst_mode_summary"
@@ -124,14 +127,14 @@
 	            android:entryValues="@array/preference_touch_capture_values"
 		        android:defaultValue="none"
 		        />
-	
+
 	       	<CheckBoxPreference
 		        android:key="preference_pause_preview"
 		        android:title="@string/preference_pause_preview"
 		        android:summary="@string/preference_pause_preview_summary"
 		        android:defaultValue="false"
 		        />
-	
+
 	        <!--  if we move this to another PreferenceGroup, we should update code to remove this Preference -->
 		    <CheckBoxPreference
 		        android:key="preference_shutter_sound"
@@ -139,14 +142,14 @@
 		        android:summary="@string/preference_shutter_sound_summary"
 		        android:defaultValue="true"
 		        />
-	
+
 	        <CheckBoxPreference
 	            android:key="preference_timer_beep"
 	            android:title="@string/preference_timer_beep"
 	            android:summary="@string/preference_timer_beep_summary"
 	            android:defaultValue="true"
 	            />
-	
+
 	        <CheckBoxPreference
 	            android:key="preference_timer_speak"
 	            android:title="@string/preference_timer_speak"
@@ -154,7 +157,7 @@
 	            android:defaultValue="false"
 	            />
 
-		    <ListPreference 
+		    <ListPreference
 	            android:key="preference_volume_keys"
 	            android:title="@string/preference_volume_keys"
 	            android:summary="@string/preference_volume_keys_summary"
@@ -162,7 +165,7 @@
 	            android:entryValues="@array/preference_volume_keys_values"
 	            android:defaultValue="volume_take_photo"
 	            />
-	    
+
 	        <CheckBoxPreference
 	            android:key="preference_audio_noise_control"
 	            android:title="@string/preference_audio_noise_control"
@@ -179,7 +182,7 @@
 		        android:inputType="text"
 	            android:defaultValue="OpenCamera"
 		        />
-	
+
 	        <!--  if we move this to another PreferenceGroup, we should update code to remove this Preference -->
 		    <CheckBoxPreference
 		        android:key="preference_using_saf"
@@ -222,7 +225,7 @@
                 android:defaultValue="false"
                 />
 
-            <ListPreference 
+            <ListPreference
                 android:key="preference_rotate_preview"
                 android:title="@string/preference_rotate_preview"
                 android:summary="@string/preference_rotate_preview_summary"
@@ -230,7 +233,7 @@
                 android:entryValues="@array/preference_rotate_preview_values"
                 android:defaultValue="0"
                 />
-        
+
             </PreferenceScreen>
 
 	    <PreferenceScreen
@@ -238,7 +241,7 @@
             android:title="@string/preference_screen_gui"
             android:persistent="false">
 
-            <ListPreference 
+            <ListPreference
                 android:key="preference_preview_size"
                 android:title="@string/preference_preview_size"
                 android:summary="@string/preference_preview_size_summary"
@@ -246,8 +249,8 @@
                 android:entryValues="@array/preference_preview_size_values"
                 android:defaultValue="preference_preview_size_wysiwyg"
                 />
-        
-            <ListPreference 
+
+            <ListPreference
                 android:key="preference_ui_placement"
                 android:title="@string/preference_ui_placement"
                 android:summary="@string/preference_ui_placement_summary"
@@ -255,9 +258,9 @@
                 android:entryValues="@array/preference_ui_placement_values"
                 android:defaultValue="ui_right"
                 />
-    
+
 	        <!--  if we move this to another PreferenceGroup, we should update code to remove this Preference -->
-            <ListPreference 
+            <ListPreference
                 android:key="preference_immersive_mode"
                 android:title="@string/preference_immersive_mode"
                 android:summary="@string/preference_immersive_mode_summary"
@@ -265,21 +268,21 @@
                 android:entryValues="@array/preference_immersive_mode_values"
                 android:defaultValue="immersive_mode_low_profile"
                 />
-    
+
             <CheckBoxPreference
                 android:key="preference_show_zoom"
                 android:title="@string/preference_show_zoom"
                 android:summary="@string/preference_show_zoom_summary"
                 android:defaultValue="true"
                 />
-        
+
             <CheckBoxPreference
                 android:key="preference_show_zoom_controls"
                 android:title="@string/preference_show_zoom_controls"
                 android:summary="@string/preference_show_zoom_controls_summary"
                 android:defaultValue="false"
                 />
-        
+
             <CheckBoxPreference
                 android:key="preference_show_zoom_slider_controls"
                 android:title="@string/preference_show_zoom_slider_controls"
@@ -294,14 +297,14 @@
                 android:summary="@string/preference_show_iso_summary"
                 android:defaultValue="true"
                 />
-        
+
             <CheckBoxPreference
                 android:key="preference_free_memory"
                 android:title="@string/preference_free_memory"
                 android:summary="@string/preference_free_memory_summary"
                 android:defaultValue="true"
                 />
-        
+
             <CheckBoxPreference
                 android:key="preference_show_angle"
                 android:title="@string/preference_show_angle"
@@ -316,7 +319,7 @@
                 android:defaultValue="false"
                 />
 
-            <ListPreference 
+            <ListPreference
                 android:key="preference_angle_highlight_color"
                 android:title="@string/preference_angle_highlight_color"
                 android:summary="@string/preference_angle_highlight_color_summary"
@@ -346,7 +349,7 @@
                 android:defaultValue="true"
                 />
 
-            <ListPreference 
+            <ListPreference
                 android:key="preference_grid"
                 android:title="@string/preference_grid"
                 android:summary="@string/preference_grid_summary"
@@ -355,7 +358,7 @@
                 android:defaultValue="preference_grid_none"
                 />
 
-            <ListPreference 
+            <ListPreference
                 android:key="preference_crop_guide"
                 android:title="@string/preference_crop_guide"
                 android:summary="@string/preference_crop_guide_summary"
@@ -363,7 +366,7 @@
                 android:entryValues="@array/preference_crop_guide_values"
                 android:defaultValue="crop_guide_none"
                 />
-            
+
             <CheckBoxPreference
                 android:key="preference_show_toasts"
                 android:title="@string/preference_show_toasts"
@@ -403,22 +406,22 @@
 	        android:key="preference_screen_photo_settings"
 	        android:title="@string/preference_screen_photo_settings"
 	        android:persistent="false">
-	
+
             <!--  if we move this to another PreferenceGroup, we should update code to remove this Preference -->
-	        <ListPreference 
+	        <ListPreference
 		        android:key="preference_resolution"
 		        android:title="@string/preference_resolution"
 		        android:summary="@string/preference_resolution_summary"
 		        />
-		
-		    <ListPreference 
+
+		    <ListPreference
 		        android:key="preference_quality"
 		        android:title="@string/preference_quality"
 		        android:summary="@string/preference_quality_summary"
 		        android:defaultValue="90"
 		        />
 
-	        <ListPreference 
+	        <ListPreference
 	            android:key="preference_stamp"
 	            android:title="@string/preference_stamp"
 	            android:summary="@string/preference_stamp_summary"
@@ -427,7 +430,7 @@
 	            android:defaultValue="preference_stamp_no"
 	            />
 
-	        <ListPreference 
+	        <ListPreference
 	            android:key="preference_stamp_dateformat"
 	            android:title="@string/preference_stamp_dateformat"
 	            android:summary="@string/preference_stamp_dateformat_summary"
@@ -436,7 +439,7 @@
 	            android:defaultValue="preference_stamp_dateformat_default"
 	            />
 
-	      	<ListPreference 
+	      	<ListPreference
 	            android:key="preference_stamp_timeformat"
 	            android:title="@string/preference_stamp_timeformat"
 	            android:summary="@string/preference_stamp_timeformat_summary"
@@ -445,7 +448,7 @@
 	            android:defaultValue="preference_stamp_timeformat_default"
 	            />
 
-	      	<ListPreference 
+	      	<ListPreference
 	            android:key="preference_stamp_gpsformat"
 	            android:title="@string/preference_stamp_gpsformat"
 	            android:summary="@string/preference_stamp_gpsformat_summary"
@@ -464,7 +467,7 @@
 	            android:defaultValue=""
 		        />
 
-	        <ListPreference 
+	        <ListPreference
 	            android:key="preference_stamp_fontsize"
 	            android:title="@string/preference_stamp_fontsize"
 	            android:summary="@string/preference_stamp_fontsize_summary"
@@ -473,7 +476,7 @@
 	            android:defaultValue="12"
 	            />
 
-            <ListPreference 
+            <ListPreference
                 android:key="preference_stamp_font_color"
                 android:title="@string/preference_stamp_font_color"
                 android:summary="@string/preference_stamp_font_color_summary"
@@ -482,7 +485,7 @@
                 android:defaultValue="#ffffff"
                 />
 
-	        <ListPreference 
+	        <ListPreference
 	            android:key="preference_stamp_style"
 	            android:title="@string/preference_stamp_style"
 	            android:summary="@string/preference_stamp_style_summary"
@@ -499,7 +502,7 @@
 	        android:persistent="false">
 
 	        <!--  if we move this to another PreferenceGroup, we should update code to remove this Preference -->
-	        <ListPreference 
+	        <ListPreference
 	            android:key="preference_video_quality"
 	            android:title="@string/video_quality"
 	            android:summary="@string/video_quality_summary"
@@ -521,7 +524,7 @@
                 android:defaultValue="false"
                 />
 
-	        <ListPreference 
+	        <ListPreference
                 android:key="preference_video_bitrate"
                 android:title="@string/preference_video_bitrate"
                 android:summary="@string/preference_video_bitrate_summary"
@@ -530,7 +533,7 @@
                 android:defaultValue="default"
                 />
 
-            <ListPreference 
+            <ListPreference
                 android:key="preference_video_fps"
                 android:title="@string/preference_video_fps"
                 android:summary="@string/preference_video_fps_summary"
@@ -539,16 +542,16 @@
                 android:defaultValue="default"
                 />
 
-            <ListPreference 
+            <ListPreference
                 android:key="preference_video_max_duration"
                 android:title="@string/preference_video_max_duration"
                 android:summary="@string/preference_video_max_duration_summary"
                 android:entries="@array/preference_video_max_duration_entries"
                 android:entryValues="@array/preference_video_max_duration_values"
-                android:defaultValue="0"
+                android:defaultValue="5"
                 />
 
-            <ListPreference 
+            <ListPreference
                 android:key="preference_video_restart"
                 android:title="@string/preference_video_restart"
                 android:summary="@string/preference_video_restart_summary"
@@ -564,7 +567,7 @@
 	            android:defaultValue="true"
 	            />
 
-	        <ListPreference 
+	        <ListPreference
                 android:key="preference_record_audio_src"
                 android:title="@string/preference_record_audio_src"
                 android:summary="@string/preference_record_audio_src_summary"
@@ -573,7 +576,7 @@
                 android:defaultValue="audio_src_camcorder"
                 />
 
-            <ListPreference 
+            <ListPreference
                 android:key="preference_record_audio_channels"
                 android:title="@string/preference_record_audio_channels"
                 android:summary="@string/preference_record_audio_channels_summary"
@@ -602,23 +605,23 @@
 	            android:summary="@string/preference_location_summary"
 	            android:defaultValue="false"
 	            />
-		    
+
 	        <CheckBoxPreference
 	            android:key="preference_gps_direction"
 	            android:title="@string/preference_gps_direction"
 	            android:summary="@string/preference_gps_direction_summary"
 	            android:defaultValue="false"
 	            />
-		    
+
 	      	<CheckBoxPreference
 	            android:key="preference_require_location"
 	            android:title="@string/preference_require_location"
 	            android:summary="@string/preference_require_location_summary"
 	            android:defaultValue="false"
 	            />
-		    
+
 	    </PreferenceScreen>
-	        
+
 	</PreferenceCategory>
 
     <PreferenceCategory
@@ -626,39 +629,39 @@
         android:title="@string/preference_category_online"
         >
 
-        <Preference
-		    android:key="preference_online_help"  
-		    android:title="@string/preference_online_help"
-            android:summary="@string/preference_online_help"  
-		    />  
+        <!--<Preference-->
+		    <!--android:key="preference_online_help"-->
+		    <!--android:title="@string/preference_online_help"-->
+            <!--android:summary="@string/preference_online_help"-->
+		    <!--/>-->
 
         <Preference
-            android:key="preference_donate"  
+            android:key="preference_donate"
             android:title="@string/preference_donate"
-            android:summary="@string/preference_donate_summary"  
-            />  
+            android:summary="@string/preference_donate_summary"
+            />
 
         <!--  if we move this to another PreferenceGroup, we should update code for the findPreference() call -->
         <CheckBoxPreference
-            android:key="preference_use_camera2"  
+            android:key="preference_use_camera2"
             android:title="@string/preference_use_camera2"
-            android:summary="@string/preference_use_camera2_summary"  
+            android:summary="@string/preference_use_camera2_summary"
             android:defaultValue="false"
-            />  
-        
-        <Preference
-            android:key="preference_about"  
-            android:title="@string/preference_about"
-            android:summary="@string/preference_about_summary"  
-            />  
-        
-        <Preference
-            android:key="preference_reset"  
-            android:title="@string/preference_reset"
-            android:summary="@string/preference_reset_summary"  
             />
-        
+
+        <Preference
+            android:key="preference_about"
+            android:title="@string/preference_about"
+            android:summary="@string/preference_about_summary"
+            />
+
+        <Preference
+            android:key="preference_reset"
+            android:title="@string/preference_reset"
+            android:summary="@string/preference_reset_summary"
+            />
+
         </PreferenceCategory>
-        
+
 </PreferenceScreen>
-<!-- From: file:/Users/nick/Documents/Programming_Applications/AndroidApplications/opencamera-code-5013f45a0e65226cf75269aee063be8c14d78f62/app/src/main/res/xml/preferences.xml -->
+<!-- From: file:/Users/nick/Documents/Programming_Applications/AndroidApplications/SpermProject/app/src/main/res/xml/preferences.xml -->

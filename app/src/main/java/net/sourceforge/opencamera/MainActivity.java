@@ -87,28 +87,28 @@ public class MainActivity extends Activity implements AudioListener.AudioListene
 	private boolean supports_camera2 = false;
 	private ArrayList<String> save_location_history = new ArrayList<String>();
 	private boolean camera_in_background = false; // whether the camera is covered by a fragment/dialog (such as settings or folder picker)
-    private GestureDetector gestureDetector;
-    private boolean screen_is_locked = false;
-    private Map<Integer, Bitmap> preloaded_bitmap_resources = new Hashtable<Integer, Bitmap>();
-    private PopupView popup_view = null;
+	private GestureDetector gestureDetector;
+	private boolean screen_is_locked = false;
+	private Map<Integer, Bitmap> preloaded_bitmap_resources = new Hashtable<Integer, Bitmap>();
+	private PopupView popup_view = null;
 
-    private SoundPool sound_pool = null;
+	private SoundPool sound_pool = null;
 	private SparseIntArray sound_ids = null;
-	
+
 	private TextToSpeech textToSpeech = null;
 	private boolean textToSpeechSuccess = false;
-	
+
 	private AudioListener audio_listener = null;
-	
+
 	private boolean ui_placement_right = true;
 
 	private ToastBoxer switch_camera_toast = new ToastBoxer();
 	private ToastBoxer switch_video_toast = new ToastBoxer();
-    private ToastBoxer screen_locked_toast = new ToastBoxer();
-    private ToastBoxer changed_auto_stabilise_toast = new ToastBoxer();
+	private ToastBoxer screen_locked_toast = new ToastBoxer();
+	private ToastBoxer changed_auto_stabilise_toast = new ToastBoxer();
 	private ToastBoxer exposure_lock_toast = new ToastBoxer();
 	private boolean block_startup_toast = false;
-    
+
 	// for testing:
 	public boolean is_test = false;
 	public Bitmap gallery_bitmap = null;
@@ -116,194 +116,204 @@ public class MainActivity extends Activity implements AudioListener.AudioListene
 	public boolean test_have_angle = false;
 	public float test_angle = 0.0f;
 	public String test_last_saved_image = null;
-	
+	public boolean isFirstTime = false;
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		if( MyDebug.LOG ) {
+		if (MyDebug.LOG) {
 			Log.d(TAG, "onCreate");
 		}
-    	long time_s = System.currentTimeMillis();
+		long time_s = System.currentTimeMillis();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
-		if( getIntent() != null && getIntent().getExtras() != null ) {
+		if (getIntent() != null && getIntent().getExtras() != null) {
 			is_test = getIntent().getExtras().getBoolean("test_project");
-			if( MyDebug.LOG )
+			if (MyDebug.LOG)
 				Log.d(TAG, "is_test: " + is_test);
 		}
-		if( getIntent() != null && getIntent().getExtras() != null ) {
+		if (getIntent() != null && getIntent().getExtras() != null) {
 			boolean take_photo = getIntent().getExtras().getBoolean(TakePhoto.TAKE_PHOTO);
-			if( MyDebug.LOG )
+			if (MyDebug.LOG)
 				Log.d(TAG, "take_photo?: " + take_photo);
 		}
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-		if( MyDebug.LOG ) {
+		if (MyDebug.LOG) {
 			Log.d(TAG, "standard max memory = " + activityManager.getMemoryClass() + "MB");
 			Log.d(TAG, "large max memory = " + activityManager.getLargeMemoryClass() + "MB");
 		}
 		//if( activityManager.getMemoryClass() >= 128 ) { // test
-		if( activityManager.getLargeMemoryClass() >= 128 ) {
+		if (activityManager.getLargeMemoryClass() >= 128) {
 			supports_auto_stabilise = true;
 		}
-		if( MyDebug.LOG )
+		if (MyDebug.LOG)
 			Log.d(TAG, "supports_auto_stabilise? " + supports_auto_stabilise);
 
 		// hack to rule out phones unlikely to have 4K video, so no point even offering the option!
-		// both S5 and Note 3 have 128MB standard and 512MB large heap (tested via Samsung RTL), as does Galaxy K Zoom
+		// both S5 and Note 3 have 18MB standard and 512MB large heap (tested via Samsung RTL), as does Galaxy K Zoom
 		// also added the check for having 128MB standard heap, to support modded LG G2, which has 128MB standard, 256MB large - see https://sourceforge.net/p/opencamera/tickets/9/
-		if( activityManager.getMemoryClass() >= 128 || activityManager.getLargeMemoryClass() >= 512 ) {
+		if (activityManager.getMemoryClass() >= 128 || activityManager.getLargeMemoryClass() >= 512) {
 			supports_force_video_4k = true;
 		}
-		if( MyDebug.LOG )
+		if (MyDebug.LOG)
 			Log.d(TAG, "supports_force_video_4k? " + supports_force_video_4k);
 
 		applicationInterface = new MyApplicationInterface(this, savedInstanceState);
 
 		initCamera2Support();
 
-        setWindowFlagsForCamera();
+		setWindowFlagsForCamera();
 
-        // read save locations
-        save_location_history.clear();
-        int save_location_history_size = sharedPreferences.getInt("save_location_history_size", 0);
-		if( MyDebug.LOG )
+		// read save locations
+		save_location_history.clear();
+		int save_location_history_size = sharedPreferences.getInt("save_location_history_size", 0);
+		if (MyDebug.LOG)
 			Log.d(TAG, "save_location_history_size: " + save_location_history_size);
-        for(int i=0;i<save_location_history_size;i++) {
-        	String string = sharedPreferences.getString("save_location_history_" + i, null);
-        	if( string != null ) {
-    			if( MyDebug.LOG )
-    				Log.d(TAG, "save_location_history " + i + ": " + string);
-        		save_location_history.add(string);
-        	}
-        }
-        // also update, just in case a new folder has been set; this is also necessary to update the gallery icon
+		for (int i = 0; i < save_location_history_size; i++) {
+			String string = sharedPreferences.getString("save_location_history_" + i, null);
+			if (string != null) {
+				if (MyDebug.LOG)
+					Log.d(TAG, "save_location_history " + i + ": " + string);
+				save_location_history.add(string);
+			}
+		}
+		// also update, just in case a new folder has been set; this is also necessary to update the gallery icon
 		updateFolderHistory();
 		//updateFolderHistory("/sdcard/Pictures/OpenCameraTest");
 
-        mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-		if( mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null ) {
-			if( MyDebug.LOG )
+		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		if (mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
+			if (MyDebug.LOG)
 				Log.d(TAG, "found accelerometer");
 			mSensorAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		}
-		else {
-			if( MyDebug.LOG )
+		} else {
+			if (MyDebug.LOG)
 				Log.d(TAG, "no support for accelerometer");
 		}
-		if( mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) != null ) {
-			if( MyDebug.LOG )
+		if (mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) != null) {
+			if (MyDebug.LOG)
 				Log.d(TAG, "found magnetic sensor");
 			mSensorMagnetic = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-		}
-		else {
-			if( MyDebug.LOG )
+		} else {
+			if (MyDebug.LOG)
 				Log.d(TAG, "no support for magnetic sensor");
 		}
 
 		clearSeekBar();
-		
-        preview = new Preview(applicationInterface, savedInstanceState, ((ViewGroup) this.findViewById(R.id.preview)));
-		
-	    View switchCameraButton = (View) findViewById(R.id.switch_camera);
-	    switchCameraButton.setVisibility(preview.getCameraControllerManager().getNumberOfCameras() > 1 ? View.VISIBLE : View.GONE);
+
+		preview = new Preview(applicationInterface, savedInstanceState, ((ViewGroup) this.findViewById(R.id.preview)));
+
+		View switchCameraButton = (View) findViewById(R.id.switch_camera);
+		switchCameraButton.setVisibility(preview.getCameraControllerManager().getNumberOfCameras() > 1 ? View.VISIBLE : View.GONE);
 
 
-	    orientationEventListener = new OrientationEventListener(this) {
+		orientationEventListener = new OrientationEventListener(this) {
 			@Override
 			public void onOrientationChanged(int orientation) {
 				MainActivity.this.onOrientationChanged(orientation);
 			}
-        };
+		};
 
-        View galleryButton = (View)findViewById(R.id.gallery);
-        galleryButton.setOnLongClickListener(new View.OnLongClickListener() {
+		View galleryButton = (View) findViewById(R.id.gallery);
+		galleryButton.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
 				//preview.showToast(null, "Long click");
 				longClickedGallery();
 				return true;
 			}
-        });
-        
-        gestureDetector = new GestureDetector(this, new MyGestureDetector());
-        
-        View decorView = getWindow().getDecorView();
-        decorView.setOnSystemUiVisibilityChangeListener
-                (new View.OnSystemUiVisibilityChangeListener() {
-            @Override
-            public void onSystemUiVisibilityChange(int visibility) {
-                // Note that system bars will only be "visible" if none of the
-                // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
-            	if( !usingKitKatImmersiveMode() )
-            		return;
-        		if( MyDebug.LOG )
-        			Log.d(TAG, "onSystemUiVisibilityChange: " + visibility);
-                if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
-            		if( MyDebug.LOG )
-            			Log.d(TAG, "system bars now visible");
-                    // The system bars are visible. Make any desired
-                    // adjustments to your UI, such as showing the action bar or
-                    // other navigational controls.
-            		applicationInterface.setImmersiveMode(false);
-                	setImmersiveTimer();
-                }
-                else {
-            		if( MyDebug.LOG )
-            			Log.d(TAG, "system bars now NOT visible");
-                    // The system bars are NOT visible. Make any desired
-                    // adjustments to your UI, such as hiding the action bar or
-                    // other navigational controls.
-                	applicationInterface.setImmersiveMode(true);
-                }
-            }
-        });
+		});
 
-//		boolean has_done_first_time = sharedPreferences.contains(PreferenceKeys.getFirstTimePreferenceKey());
-		boolean has_done_first_time = true; //nickkouk
-        if( !has_done_first_time && !is_test ) {
-	        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle(R.string.app_name);
-            alertDialog.setMessage(R.string.intro_text);
-            alertDialog.setPositiveButton(R.string.intro_ok, null);
-            alertDialog.show();
+		gestureDetector = new GestureDetector(this, new MyGestureDetector());
 
-            setFirstTimeFlag();
-        }
+		View decorView = getWindow().getDecorView();
+		decorView.setOnSystemUiVisibilityChangeListener
+				(new View.OnSystemUiVisibilityChangeListener() {
+					@Override
+					public void onSystemUiVisibilityChange(int visibility) {
+						// Note that system bars will only be "visible" if none of the
+						// LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+						if (!usingKitKatImmersiveMode())
+							return;
+						if (MyDebug.LOG)
+							Log.d(TAG, "onSystemUiVisibilityChange: " + visibility);
+						if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+							if (MyDebug.LOG)
+								Log.d(TAG, "system bars now visible");
+							// The system bars are visible. Make any desired
+							// adjustments to your UI, such as showing the action bar or
+							// other navigational controls.
+							applicationInterface.setImmersiveMode(false);
+							setImmersiveTimer();
+						} else {
+							if (MyDebug.LOG)
+								Log.d(TAG, "system bars now NOT visible");
+							// The system bars are NOT visible. Make any desired
+							// adjustments to your UI, such as hiding the action bar or
+							// other navigational controls.
+							applicationInterface.setImmersiveMode(true);
+						}
+					}
+				});
 
-        preloadIcons(R.array.flash_icons);
-        preloadIcons(R.array.focus_mode_icons);
+		boolean has_done_first_time = sharedPreferences.contains(PreferenceKeys.getFirstTimePreferenceKey());
+		if (!has_done_first_time && !is_test) {
+			AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+			alertDialog.setTitle(R.string.app_name);
+			alertDialog.setMessage(R.string.info_text);
+			alertDialog.setPositiveButton(R.string.intro_ok, null);
+			alertDialog.show();
 
-        textToSpeechSuccess = false;
-        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+			setFirstTimeFlag();
+			isFirstTime = true;
+		}
+
+		preloadIcons(R.array.flash_icons);
+		preloadIcons(R.array.focus_mode_icons);
+
+		textToSpeechSuccess = false;
+		textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
 			@Override
 			public void onInit(int status) {
-				if( MyDebug.LOG )
+				if (MyDebug.LOG)
 					Log.d(TAG, "TextToSpeech initialised");
-				if( status == TextToSpeech.SUCCESS ) {
-					textToSpeechSuccess = true;					
-					if( MyDebug.LOG )
+				if (status == TextToSpeech.SUCCESS) {
+					textToSpeechSuccess = true;
+					if (MyDebug.LOG)
 						Log.d(TAG, "TextToSpeech succeeded");
-				}
-				else {
-					if( MyDebug.LOG )
+				} else {
+					if (MyDebug.LOG)
 						Log.d(TAG, "TextToSpeech failed");
 				}
 			}
 		});
 
 		hideAllButtons();
-        
-		if( MyDebug.LOG )
+
+		if (MyDebug.LOG)
 			Log.d(TAG, "time for Activity startup: " + (System.currentTimeMillis() - time_s));
+	}
+
+	public void switch2Overall(String filename) {
+		if (MyDebug.LOG)
+			Log.d(TAG, "switch2Overall. filename = " + filename);
+
+		// switch to the OverallActivity and pass the filename in the bundle
+		Intent overallActivityIntent = new Intent(MainActivity.this, OverallActivity.class);
+		overallActivityIntent.putExtra("video_path", filename); //Optional parameters
+		overallActivityIntent.putExtra("isFirstTime", isFirstTime); //Optional parameters
+		MainActivity.this.startActivity(overallActivityIntent);
+
 	}
 
 	public void hideAllButtons() {
 		// nickkouk: Hide all the buttons in the main screen
 
-		if( MyDebug.LOG )
+		if (MyDebug.LOG)
 			Log.d(TAG, "nickkouk: hideAllButtons triggered.");
 
 		final int visibility = View.INVISIBLE;
@@ -312,30 +322,17 @@ public class MainActivity extends Activity implements AudioListener.AudioListene
 		View switchVideoButton = (View) findViewById(R.id.switch_video);
 		View exposureButton = (View) findViewById(R.id.exposure);
 		View exposureLockButton = (View) findViewById(R.id.exposure_lock);
-		View galleryButton = (View) findViewById(R.id.gallery);
-		View settingsButton = (View) findViewById(R.id.settings);
+//		View galleryButton = (View) findViewById(R.id.gallery);
+//		View settingsButton = (View) findViewById(R.id.settings);
 
 		switchCameraButton.setVisibility(visibility);
 		switchVideoButton.setVisibility(visibility);
 		exposureButton.setVisibility(visibility);
 		exposureLockButton.setVisibility(visibility);
-		galleryButton.setVisibility(visibility);
-		settingsButton.setVisibility(visibility);
+//		galleryButton.setVisibility(visibility);
+//		settingsButton.setVisibility(visibility);
 	}
 
-	// press the button to stop the video programmatically after X seconds.
-	public void pressAfterXseconds() {
-		final int seconds = 5;
-
-
-		if( MyDebug.LOG )
-			Log.d(TAG, "nickkouk: pressedAfterXseconds:" + seconds);
-
-		// why don't you just call the native Timer of the application?
-
-
-	}
-	
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	private void initCamera2Support() {
 		if( MyDebug.LOG )
@@ -407,7 +404,7 @@ public class MainActivity extends Activity implements AudioListener.AudioListene
 		return true;
 	}
 	
-	private void setFirstTimeFlag() {
+	public void setFirstTimeFlag() {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		SharedPreferences.Editor editor = sharedPreferences.edit();
 		editor.putBoolean(PreferenceKeys.getFirstTimePreferenceKey(), true);
@@ -787,8 +784,8 @@ public class MainActivity extends Activity implements AudioListener.AudioListene
 			layoutParams.addRule(right_of, 0);
 			view.setLayoutParams(layoutParams);
 			view.setRotation(ui_rotation);
-			view.setVisibility(View.GONE);
-	
+			view.setVisibility(View.VISIBLE);
+
 			view = findViewById(R.id.gallery);
 			layoutParams = (RelativeLayout.LayoutParams)view.getLayoutParams();
 			layoutParams.addRule(align_parent_top, RelativeLayout.TRUE);
@@ -797,7 +794,7 @@ public class MainActivity extends Activity implements AudioListener.AudioListene
 			layoutParams.addRule(right_of, 0);
 			view.setLayoutParams(layoutParams);
 			view.setRotation(ui_rotation);
-			view.setVisibility(View.GONE);
+			view.setVisibility(View.VISIBLE);
 
 			view = findViewById(R.id.popup);
 			layoutParams = (RelativeLayout.LayoutParams)view.getLayoutParams();
@@ -1340,6 +1337,11 @@ public class MainActivity extends Activity implements AudioListener.AudioListene
 		preview.stopVideo(false); // important to stop video, as we'll be changing camera parameters when the settings window closes
 		
 		Bundle bundle = new Bundle();
+
+	    // nickkouk
+	    // know which activity I am coming from
+	    bundle.putString("cameFrom", "MainActivity");
+
 		bundle.putInt("cameraId", this.preview.getCameraId());
 		bundle.putString("camera_api", this.preview.getCameraAPI());
 		bundle.putBoolean("using_android_l", this.preview.usingCamera2API());
@@ -1432,6 +1434,8 @@ public class MainActivity extends Activity implements AudioListener.AudioListene
 		putBundleExtra(bundle, "flash_values", this.preview.getSupportedFlashValues());
 		putBundleExtra(bundle, "focus_values", this.preview.getSupportedFocusValues());
 
+	    // nickkouk
+	    // here the fragment is finally called
 		setWindowFlagsForSettings();
 		MyPreferenceFragment fragment = new MyPreferenceFragment();
 		fragment.setArguments(bundle);
@@ -1939,7 +1943,7 @@ public class MainActivity extends Activity implements AudioListener.AudioListene
 				super.onDismiss(dialog);
 			}
 		};
-		fragment.show(getFragmentManager(), "FOLDER_FRAGMENT");
+	    fragment.show(getFragmentManager(), "FOLDER_FRAGMENT");
     }
     
     private void longClickedGallery() {
@@ -2070,7 +2074,7 @@ public class MainActivity extends Activity implements AudioListener.AudioListene
     }
 
     private void takePicture() {
-		if( MyDebug.LOG )
+		if( MyDebug.LOG)
 			Log.d(TAG, "takePicture");
 		closePopup();
     	this.preview.takePicturePressed();
@@ -2097,8 +2101,11 @@ public class MainActivity extends Activity implements AudioListener.AudioListene
     }
 
     class MyGestureDetector extends SimpleOnGestureListener {
+	    private static final int SWIPE_THRESHOLD = 150;
+        private static final int SWIPE_VELOCITY_THRESHOLD = 150;
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+	        boolean result = false;
             try {
         		if( MyDebug.LOG )
         			Log.d(TAG, "from " + e1.getX() + " , " + e1.getY() + " to " + e2.getX() + " , " + e2.getY());
@@ -2119,8 +2126,8 @@ public class MainActivity extends Activity implements AudioListener.AudioListene
                 	preview.showToast(screen_locked_toast, R.string.unlocked);
                 	unlockScreen();
                 }
-            }
-            catch(Exception e) {
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
             return false;
         }
@@ -2130,7 +2137,7 @@ public class MainActivity extends Activity implements AudioListener.AudioListene
 			preview.showToast(screen_locked_toast, R.string.screen_is_locked);
 			return true;
         }
-    }	
+    }
 
 	@Override
 	protected void onSaveInstanceState(Bundle state) {

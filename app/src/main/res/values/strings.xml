@@ -4,7 +4,7 @@
     <string name="app_name">"Sperm3000"</string>
     <string name="action_settings">Settings</string>
     <string name="action_popup">Popup settings</string>
-    <string name="intro_text">Touch to focus, and press the blue camera button to take photos. For more help, click Online help from Settings. Open Camera is completely free. If you like this app, please consider buying my donate app :) (see link in Settings, or Online help).\n\nPrivacy Policy: Location permission is required for geotagging, but this is disabled by default. If enabled, your location is encoded in the saved files (and it is only used for this purpose).</string>
+    <string name="intro_text">"This app was made as part of a six-month project in the Biomedical and Bioengineering course of the Mechanical engineering department of NTUA. The goal was to create a complete product (hardware+software) for in-house cost-affordable sperm analysis</string>
     <string name="intro_ok">OK (This message won\'t show again)</string>
     
     <string name="answer_yes">Yes</string>
@@ -124,7 +124,7 @@
     <string name="preference_save_video_prefix">Save video prefix</string>
     <string name="preference_save_video_prefix_summary">The prefix to use for the save filenames for videos</string>
     <string name="preference_show_when_locked">Show camera when locked</string>
-    <string name="preference_show_when_locked_summary">If enabled, Open Camera will still show above any lockscreen (you\'ll still have to unlock to access Settings, Gallery etc)</string>
+    <string name="preference_show_when_locked_summary">If enabled, camera will still show above any lockscreen (you\'ll still have to unlock to access Settings, Gallery etc)</string>
     <string name="preference_lock_video">Lock screen when recording video</string>
     <string name="preference_lock_video_summary">When recording video, the GUI will be locked to prevent accidentally stopping recording. Swipe the screen to unlock. Note that video recording will always stop if the app goes into background or the screen is blanked.</string>
     <string name="preference_rotate_preview">Rotate preview</string>
@@ -167,7 +167,7 @@
     <string name="preference_thumbnail_animation">Show thumbnail animation</string>
     <string name="preference_thumbnail_animation_summary">Display moving thumbnail animation when taking a photo</string>
     <string name="preference_keep_display_on">Keep display on</string>
-    <string name="preference_keep_display_on_summary">If enabled, the screen won\'t switch off while the main Open Camera UI is active</string>
+    <string name="preference_keep_display_on_summary">If enabled, the screen won\'t switch off while the main Camera UI is active</string>
     <string name="preference_max_brightness">Force maximum brightness</string>
     <string name="preference_max_brightness_summary">Force screen display to be at maximum brightness, rather than device default</string>
     
@@ -226,15 +226,15 @@
     
     <string name="preference_category_online">Misc</string>
     <string name="preference_online_help">Online help</string>
-    <string name="preference_donate">Donate to support development</string>
-    <string name="preference_donate_summary">If you like this app, please consider making a donation. You can do this by purchasing my "donation app" - click this option will open up the page for my donation app. Thanks!</string>
+    <string name="preference_donate">Donate to the Open Camera</string>
+    <string name="preference_donate_summary">This app is heavily based on the Open Camera Project. If you liked it, it means you like Open Camera as well. Consider buying the "Donation App" of the initial developer by clicking here.</string>
     <string name="preference_use_camera2">Use Camera2 API</string>
     <string name="preference_use_camera2_summary">Enables Android 5\'s Camera2 API - offers extra features, but currently experimental (will cause a restart)</string>
     <string name="preference_about">About</string>
-    <string name="preference_about_summary">App and debug information</string>
+    <string name="preference_about_summary">Information about the application and its developers</string>
     <string name="preference_reset">Reset settings</string>
-    <string name="preference_reset_summary">Reset all Open Camera settings to default</string>
-    <string name="preference_reset_question">Are you sure you want to reset all Open Camera settings to default?</string>
+    <string name="preference_reset_summary">Reset all Sperm3000 settings to default</string>
+    <string name="preference_reset_question">Are you sure you want to reset all Sperm3000 settings to default?</string>
 
     <string name="about_ok">OK</string>
     <string name="about_available">Available</string>
@@ -267,4 +267,15 @@
     <!-- the permission names such as Microphone should match what Android calls them in the App permission settings -->
     <string name="permission_record_audio_not_available">Microphone permission is not available</string>
     <string name="permission_location_not_available">Location permission is not available</string>
+
+    <string name="appTitle">Sperm3000</string>
+    <string name="appSubtitle">In-house sperm analysis</string>
+    <string name="shootVideo_btn">Shoot video</string>
+    <string name="analyzeVideo_btn">Analyze sample</string>
+    <string name="previousResults_btn">Previous Results</string>
+    <string name="info_text">Place the phone on top of the device in designated position. Make sure that it is placed horizontally and the camera is pointing directly at the sample. Bring the sample in focus by tapping on the screen. When ready hit the button and wait 10 seconds for the recording to take place. Sit back and wait for the results.</string>
+    <string name="info">Info</string>
+    <string name="preferenceScreen">preferenceScreen</string>
+    <string name="firstTimeOverall">You have successfully captured the video. Now you can either send the results for analysis or recapture the video if you think its quality is poor.</string>
+    <string name="connection_problem">Connection to the server cannot be established. This may be due to phone connectivity issues or the analysis server may be down. Check your internet access or try later.</string>
 </resources>
