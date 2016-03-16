@@ -1,5 +1,38 @@
 package net.sourceforge.opencamera;
 
+/*
+ * NTUA, National Technical University of Athens
+ * School of Mechanical Engineering
+ * nickkouk, March 2016
+ *
+ * The following application was written as part of the spermodiagram project in the biomechanics course
+ *
+ * This is the main activity of the Sperm3000 application.
+ * The goal is to present the user with a minimalistic activity (3,4 buttons at most) so that
+ * the user can then proceed to capture and send the video.
+ * Most of the code for the camera manipulation was written for OpenCamera project (http://opencamera.sourceforge.net/)
+ *
+ * RUNNING THE APP:
+ *     - Install an android - Java code editor (Android Studio is the suggested one.)
+ *     - Have the developement options enabled in the phone.
+ *     - Install and run the application to the phone using Android Studio
+ * KNOWN BUGS:
+ *     The TCP connection breaks if the outgoing video is over ~4 seconds. Has to be an easy bug to fix though.
+ *     In case you do take up this project contact me so that we can resolve this issue.
+ * TODO:
+ *     - Fix the communication issue mentioned above.
+ *     - Render the activity appearance, in a better way.
+ *     - Code the authentication protocol
+ *
+ * For implementation/technical details refer to:
+ *     - http://biotech-ntua.wikispaces.com/Project_20152016_Spermodiagram#
+ *     - https://github.com/bergercookie/SpermProject_server
+ *     - https://github.com/bergercookie/SpermProject
+ *
+ *
+ * Maintainer: Nikolaos Koukis, nickkouk@gmail.com
+ */
+
 import net.sourceforge.opencamera.MainActivity;
 
 // IMPORTS
@@ -32,8 +65,8 @@ public class OverallActivity extends Activity {
 	// file to send
 	private Socket socket;
 	private File text_file = new File("/storage/sdcard0/DCIM/OpenCamera/kalimera.txt");
-	private File results_file = new File("/storage/sdcard0/DCIM/OpenCamera/results.txt");
-	private File video_file = new File("/storage/sdcard0/DCIM/OpenCamera/VID_20160110_033932.mp4");
+//	private File results_file = new File("/storage/sdcard0/DCIM/OpenCamera/results.txt");
+	private File video_file = new File("/storage/sdcard0/DCIM/OpenCamera/VID1.mp4");
 	private Thread connectionThread = new Thread(new ClientThread());
 	private boolean connectionEstablished = false; // boolean to check weather the connection is working
 
@@ -81,7 +114,7 @@ public class OverallActivity extends Activity {
 						connectionThread.start();
 						// do the following only if the connection is working, otherwise it breaks the application
 						try {
-							byte[] message = null;
+							byte[] message;
 
 							// I may be sending a simple textfile
 							if (SEND_VIDEO == true) {
@@ -191,17 +224,6 @@ public class OverallActivity extends Activity {
 		}
 	}
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		try {
-			socket.close();
-		} catch (Exception e) {
-			// Auto-generated catch block
-			e.printStackTrace();
-		}
-		socket = null;
-	}
 	// CLICKED BUTTONS CALLBACKS
 
     public void clickedSettingsOver(View view) {
@@ -237,9 +259,10 @@ public class OverallActivity extends Activity {
 	}
 
 	private byte[] getBinRepr0File(File file) {
-
-		// http://stackoverflow.com/a/13416628/2843583
-		// encode file in base64 binary
+		/* Function for encoding the outgoing video in base64.
+		 * This is an optional procedure since any message going through sockets is by default encoded
+		 * see http://stackoverflow.com/a/13416628/2843583 for insight on the implementation
+		 */
 		byte[] byteBinaryData = null; // need to be initialized outside the try statement
 		try {
 			FileInputStream objFileIS = new FileInputStream(file);
@@ -265,6 +288,9 @@ public class OverallActivity extends Activity {
 
 		@Override
 		public void run() {
+			/* function that the communication thread runs on after initialisation
+			* todo - fix this. it probably contains bug
+			*/
 
 			if (MyDebug.LOG)
 				Log.d(TAG, "ClientThread: Running.");
@@ -274,7 +300,7 @@ public class OverallActivity extends Activity {
 				socket = new Socket(serverAddr, SERVERPORT);
 				if (MyDebug.LOG)
 					Log.d(TAG, "ClientThread: Thread made the connection.");
-				connectionEstablished = true;
+//				connectionEstablished = true;
 			} catch (UnknownHostException e1) {
 				if (MyDebug.LOG)
 					Log.d(TAG, "ClientThread: UnknownHostException");
